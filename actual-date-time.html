@@ -33,7 +33,7 @@
         const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul","Ago","Set","Out","Nov","Dez"];
         let data = new Date();
         let dataFormatada = zerosLeft(data.getDate(), 2) + "/" + zerosLeft(data.getMonth()+1, 2) + "/" + data.getFullYear();
-        dataFormatada += ' '+zerosLeft(data.getHours(), 2)+':'+zerosLeft(data.getMinutes(), 2);
+        dataFormatada += '<br/>'+zerosLeft(data.getHours(), 2)+':'+zerosLeft(data.getMinutes(), 2);
         document.getElementById("app").innerHTML = dataFormatada;
     }
     atualizaData();
