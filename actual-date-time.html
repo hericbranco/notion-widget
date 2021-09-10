@@ -21,11 +21,19 @@
 <script>
     setInterval(atualizaData, 500);
 
+    function zerosLeft(number, qtdZeros) {
+        let strZeros = '';
+        for (i=1;i<=qtdZeros;i++) {
+            strZeros+='0';
+        }
+        return (strZeros + number).slice(-qtdZeros);
+    }
+
     function atualizaData() {
         const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul","Ago","Set","Out","Nov","Dez"];
         let data = new Date();
-        let dataFormatada = ((('00' + data.getDate()).slice(-2) + "/" + (('00' + (data.getMonth()+1)).slice(-2)) + "/" + data.getFullYear()));
-        dataFormatada += '<br/>'+data.getHours()+':'+data.getMinutes();
+        let dataFormatada = zerosLeft(data.getDate(), 2) + "/" + zerosLeft(data.getMonth()+1, 2) + "/" + data.getFullYear();
+        dataFormatada += ' '+zerosLeft(data.getHours(), 2)+':'+zerosLeft(data.getMinutes(), 2);
         document.getElementById("app").innerHTML = dataFormatada;
     }
     atualizaData();
