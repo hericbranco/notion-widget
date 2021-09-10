@@ -1,0 +1,32 @@
+<html>
+<body>
+<h2 id="app">
+
+</h2>
+</body>
+</html>
+<style>
+    body {
+        background-color: #2f3437;
+        color: #E5E5E9;
+        font-family: sans-serif;
+    }
+    h2 {
+        margin: 0;
+        font-size: 32px;
+        text-align: center;
+        font-weight: normal;
+    }
+</style>
+<script>
+    setInterval(atualizaData, 500);
+
+    function atualizaData() {
+        const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul","Ago","Set","Out","Nov","Dez"];
+        let data = new Date();
+        let dataFormatada = ((('00' + data.getDate()).slice(-2) + "/" + (('00' + (data.getMonth()+1)).slice(-2)) + "/" + data.getFullYear()));
+        dataFormatada += '<br/>'+data.getHours()+':'+data.getMinutes();
+        document.getElementById("app").innerHTML = dataFormatada;
+    }
+    atualizaData();
+</script>
