@@ -3,6 +3,10 @@
 <h2 id="app">
 
 </h2>
+<div class="center">
+    <div id="frm_cadastrar_alarme" class="hide"><input type="time" id="alarm_timer"><button onclick="createAlarm()">Cadastrar</button></div>
+    <button onclick="showDiv('frm_cadastrar_alarme')" id="btnShowFrmCadastrarAlarme">Alarme</button>
+</div>
 </body>
 </html>
 <style>
@@ -17,8 +21,19 @@
         text-align: center;
         font-weight: normal;
     }
+    .center {
+        text-align: center;
+    }
+    .hide {
+        display: none;
+    }
+    .text-red {
+        color: #ff0000;
+        filter: invert(28%) sepia(80%) saturate(5795%) hue-rotate(352deg) brightness(90%) contrast(131%);
+    }
 </style>
 <script>
+    var alarm;
     setInterval(atualizaData, 500);
 
     function zerosLeft(number, qtdZeros) {
@@ -29,11 +44,34 @@
         return (strZeros + number).slice(-qtdZeros);
     }
 
+    function showDiv(idElement)
+    {
+        document.getElementById(idElement).classList.remove('hide');
+        event.path[0].classList.add('hide');
+    }
+
+    function createAlarm() {
+        console.log(document.getElementById('alarm_timer').value);
+        alarm = new Date();
+        [hour, minute] = document.getElementById('alarm_timer').value.split(':');
+        alarm.setHours(hour, minute);
+        document.getElementById('frm_cadastrar_alarme').classList.add('hide');
+        document.getElementById('btnShowFrmCadastrarAlarme').classList.remove('hide');
+    }
+
     function atualizaData() {
         const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul","Ago","Set","Out","Nov","Dez"];
         let data = new Date();
         let dataFormatada = zerosLeft(data.getDate(), 2) + "/" + zerosLeft(data.getMonth()+1, 2) + "/" + data.getFullYear();
         dataFormatada += '<br/>'+zerosLeft(data.getHours(), 2)+':'+zerosLeft(data.getMinutes(), 2);
+        if (alarm) {
+            dataFormatada += ' <span class="text-red">['+'<img src="https://super.so/icon/light/clock.svg"/>'+alarm.getHours()+':'+alarm.getMinutes()+']</span>';
+            if (data.getHours()+':'+data.getMinutes() == alarm.getHours()+':'+alarm.getMinutes()) {
+                var sound = new Audio('mixkit-warning-alarm-buzzer-991.wav');
+                sound.play();
+                alarm = null;
+            }
+        }
         document.getElementById("app").innerHTML = dataFormatada;
     }
     atualizaData();
